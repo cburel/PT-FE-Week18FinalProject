@@ -1,6 +1,7 @@
 import { Link, Outlet } from "react-router-dom"
 import Headerbar from "./Headerbar"
 import Copyright from "./Copyright"
+import "/node_modules/bootstrap/dist/css/bootstrap.min.css"
 import "../App.css"
 
 export default function Layout() {

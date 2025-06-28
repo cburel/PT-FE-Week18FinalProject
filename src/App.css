@@ -3,10 +3,10 @@
   margin: 0 auto;
 }
 
-.art-items {
+.art-items,
+.image-buttons {
   display: flex;
   flex-wrap: wrap;
-  list-style: none;
 }
 
 .art-image img {
@@ -14,4 +14,14 @@
   height: 300px;
   object-fit: cover;
   padding: 0.5rem;
+}
+
+.image-buttons {
+  padding: 0 0.5rem;
+}
+
+.btn-del,
+.btn-upd {
+  border-radius: 0;
+  margin-right: 0.2rem;
 }

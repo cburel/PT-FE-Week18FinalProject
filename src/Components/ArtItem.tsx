@@ -2,6 +2,7 @@ import React, { use, useState, useEffect } from 'react'
 
 interface Image {
     id: number;
+    name: string;
     image: string;
 }
 
@@ -34,6 +35,26 @@ export default function ArtItem() {
         fetchImages();
     }, []);
 
+    // handles deleting an image
+    const deleteImage = (idToDelete: number) => {
+
+        // creates new array of items with everything except the item to delete
+        setImages(prevImages =>
+            prevImages.filter(image => image.id !== idToDelete));
+    }
+
+    // tracks updating the item name
+    const [updatedName, setUpdatedName] = useState("");
+
+    // handles updating an existing item in the list
+    const updateImage = (idToUpdate: number, newName: string) => {
+        setImages(prevImages =>
+            prevImages.map(image =>
+                image.id === idToUpdate ? { ...image, name: newName } : image
+            )
+        );
+    };
+
     // renders loading message
     if (isLoading) {
         return (
@@ -51,11 +72,19 @@ export default function ArtItem() {
     // renders out the items onto the page
     return (
         <div>
-            <ul className="art-items">
-                {images.map((item) => (
-                    <li key={item.id} className="art-image"><img src={item.image} /></li>
+            <div className="art-items">
+                {images.map((image) => (
+                    <div className="flex-unwrapper">
+                        <div key={image.id} className="art-image"><img src={image.image} /></div>
+                        <div>by {image.name}</div>
+                        <div className="image-buttons">
+                            <button type="button" className="btn btn-danger btn-del" onClick={() => deleteImage(image.id)}>X</button>
+                            <button type="button" className="btn btn-primary btn-upd" onClick={() => updateImage(image.id, updatedName)}>U</button>
+                            <input type="text" placeholder="update title" onChange={(event => setUpdatedName(event.target.value))}></input>
+                        </div>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     )
 }
