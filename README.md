@@ -10,6 +10,6 @@ contact page
 art item
 contact form
 header bar
-navigation bar
 side bar
 layout
+copyright
