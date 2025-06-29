@@ -47,12 +47,37 @@ export default function ArtItem() {
     const [updatedName, setUpdatedName] = useState("");
 
     // handles updating an existing item in the list
-    const updateImage = (idToUpdate: number, newName: string) => {
+    const updateImageName = async (idToUpdate: number, newName: string) => {
+
+        updateNameBackend(idToUpdate, newName);
+
         setImages(prevImages =>
             prevImages.map(image =>
                 image.id === idToUpdate ? { ...image, name: newName } : image
             )
         );
+    };
+
+    const updateNameBackend = async (idToUpdate: number, newName: string) => {
+        try {
+            const response = await fetch(`https://685ede747b57aebd2afad59f.mockapi.io/api/site/art/${idToUpdate}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: newName }),
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(`Failed to update name on backend: ${response.status} - ${error.message || 'Unknown error'}`);
+            }
+
+            const updatedItem = await response.json();
+            console.log("Updated name on backend: ", updatedItem);
+        } catch (e) {
+            console.error("Error updating name on backend: ", e)
+        }
     };
 
     // renders loading message
@@ -79,8 +104,8 @@ export default function ArtItem() {
                         <div>by {image.name}</div>
                         <div className="image-buttons">
                             <button type="button" className="btn btn-danger btn-del" onClick={() => deleteImage(image.id)}>X</button>
-                            <button type="button" className="btn btn-primary btn-upd" onClick={() => updateImage(image.id, updatedName)}>U</button>
-                            <input type="text" placeholder="update title" onChange={(event => setUpdatedName(event.target.value))}></input>
+                            <button type="button" className="btn btn-primary btn-upd" onClick={() => updateImageName(image.id, updatedName)}>U</button>
+                            <input type="text" placeholder="update name" onChange={(event => setUpdatedName(event.target.value))}></input>
                         </div>
                     </div>
                 ))}
