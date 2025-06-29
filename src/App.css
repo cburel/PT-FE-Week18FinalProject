@@ -25,3 +25,18 @@
   border-radius: 0;
   margin-right: 0.2rem;
 }
+
+.create-image {
+  width: 100%;
+}
+
+.create-wrapper {
+  margin: 1rem auto;
+  display: inline-flex;
+  padding: 0.5rem;
+}
+
+.create-wrapper input,
+.create-btn {
+  margin: 0 0.5rem;
+}

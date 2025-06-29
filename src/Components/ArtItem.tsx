@@ -38,9 +38,27 @@ export default function ArtItem() {
     // handles deleting an image
     const deleteImage = (idToDelete: number) => {
 
+        deleteBackend(idToDelete);
+
         // creates new array of items with everything except the item to delete
         setImages(prevImages =>
             prevImages.filter(image => image.id !== idToDelete));
+    }
+
+    const deleteBackend = async (idToDelete: number) => {
+        try {
+            const response = await fetch(`https://685ede747b57aebd2afad59f.mockapi.io/api/site/art/${idToDelete}`, {
+                method: 'DELETE',
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(`Failed to delete image on backend: ${response.status} - ${error.message || 'Unknown error'}`);
+            }
+        }
+        catch (e) {
+            console.error("Error updating name on backend: ", e)
+        }
     }
 
     // tracks updating the item name
@@ -80,6 +98,40 @@ export default function ArtItem() {
         }
     };
 
+    const [newName, setNewName] = useState("");
+    const [url, setUrl] = useState("");
+
+    // handles updating an existing item in the list
+    const createImage = async (newName: string, url: string) => {
+
+        createItemBackend(newName, url);
+
+        const newImage = { id: images.length + 1, name: newName, image: url };
+        setImages([...images, newImage]);
+    };
+
+    const createItemBackend = async (newName: string, url: string) => {
+        try {
+            const response = await fetch(`https://685ede747b57aebd2afad59f.mockapi.io/api/site/art`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: newName, image: url }),
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(`Failed to add image on backend: ${response.status} - ${error.message || 'Unknown error'}`);
+            }
+
+            const updatedItem = await response.json();
+            console.log("Added image on backend: ", updatedItem);
+        } catch (e) {
+            console.error("Error adding image on backend: ", e)
+        }
+    }
+
     // renders loading message
     if (isLoading) {
         return (
@@ -100,15 +152,57 @@ export default function ArtItem() {
             <div className="art-items">
                 {images.map((image) => (
                     <div className="flex-unwrapper">
-                        <div key={image.id} className="art-image"><img src={image.image} /></div>
+                        <div
+                            key={image.id}
+                            className="art-image"
+                        >
+                            <img src={image.image} />
+                        </div>
                         <div>by {image.name}</div>
                         <div className="image-buttons">
-                            <button type="button" className="btn btn-danger btn-del" onClick={() => deleteImage(image.id)}>X</button>
-                            <button type="button" className="btn btn-primary btn-upd" onClick={() => updateImageName(image.id, updatedName)}>U</button>
-                            <input type="text" placeholder="update name" onChange={(event => setUpdatedName(event.target.value))}></input>
+                            <button
+                                type="button"
+                                className="btn btn-danger btn-del"
+                                onClick={() => deleteImage(image.id)}
+                            >
+                                X
+                            </button>
+                            <button
+                                type="button"
+                                className="btn btn-primary btn-upd"
+                                onClick={() => updateImageName(image.id, updatedName)}
+                            >
+                                U
+                            </button>
+                            <input
+                                type="text"
+                                placeholder="update name"
+                                onChange={(event => setUpdatedName(event.target.value))}>
+                            </input>
                         </div>
                     </div>
                 ))}
+            </div>
+            <div className='create-image'>
+                <div className="create-wrapper">
+                    <button
+                        type="button"
+                        className='btn btn-success btn-create'
+                        onClick={() => createImage(newName, url)}
+                    >
+                        Create Image
+                    </button>
+                    <input
+                        type="text"
+                        placeholder="author name"
+                        onChange={(event => setNewName(event.target.value))}>
+                    </input>
+                    <input
+                        type="text"
+                        placeholder="full image url"
+                        onChange={(event => setUrl(event.target.value))}>
+                    </input>
+                </div>
             </div>
         </div>
     )
