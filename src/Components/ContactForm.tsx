@@ -8,26 +8,30 @@ interface Contact {
 export default function ContactForm() {
 
     const [contacts, setContacts] = useState<Contact[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        const fetchContacts = async () => {
+    const fetchContacts = async () => {
+        setIsLoading(true);
+        setError(null);
 
-            // fetch the data
-            try {
-                const response = await fetch("https://685ede747b57aebd2afad59f.mockapi.io/api/site/contact");
-                if (!response.ok) {
-                    throw new Error("Failed to fetch!");
-                }
-                const data: Contact[] = await response.json();
-                setContacts(data);
-            } catch (e) {
-                console.error("Error fetching contacts:", e);
-            };
-            fetchContacts();
-        }
-    }, []);
+        // fetch the data
+        try {
+            const response = await fetch("https://685ede747b57aebd2afad59f.mockapi.io/api/site/contact");
+            if (!response.ok) {
+                throw new Error(`Failed to fetch contacts: ${response.statusText}`);
+            }
+            const data: Contact[] = await response.json();
+            setContacts(data);
+        } catch (e: any) {
+            setError(`Failed to load contacts: ${e.message || 'Unknown error'}`);
+        } finally {
+            setIsLoading(false);
+        };
+    }
 
     function revealContacts() {
+        fetchContacts();
         return (
             contacts.map((contact) => (
                 <p key={contact.id}>Name: {contact.name}</p>
@@ -41,14 +45,6 @@ export default function ContactForm() {
 
     const createContact = (contactName: string, contactEmail: string, contactPhone: string) => {
         createContactBackend(contactName, contactEmail, contactPhone);
-
-        const newContact = {
-            name: contactName,
-            email: contactEmail,
-            phone: contactPhone,
-            id: contacts.length + 1
-        }
-        setContacts([...contacts, newContact]);
     }
 
     const createContactBackend = async (contactName: string, contactEmail: string, contactPhone: string) => {
@@ -95,16 +91,43 @@ export default function ContactForm() {
                 type="button"
                 onClick={() => createContact(name, email, phone)}
             >
-                Submit
+                Create Contact
             </button>
-            <div>
-                <button
-                    type="button"
-                    onClick={revealContacts}
-                >
-                    Reveal Contacts
-                </button>
-            </div>
+            <button
+                type="button"
+                onClick={fetchContacts}
+                disabled={isLoading}
+            >
+                {isLoading ? 'Loading...' : 'Reveal Contact Names'}
+            </button>
+            {isLoading && (
+                <p>
+                    Fetching contacts...
+                </p>
+            )}
+            {error && (
+                <div>
+                    <strong>Error!</strong>
+                    <span >{error}</span>
+                </div>
+            )}
+
+            {!isLoading && contacts.length > 0 && (
+                <div>
+
+                    <ul>
+                        {contacts.map((contact) => (
+                            <li
+                                key={contact.id}
+                            >
+                                <p>
+                                    <span>Name:</span> {contact.name}
+                                </p>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
         </div>
     )
 }
