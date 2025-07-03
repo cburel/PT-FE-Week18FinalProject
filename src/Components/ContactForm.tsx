@@ -30,15 +30,6 @@ export default function ContactForm() {
         };
     }
 
-    function revealContacts() {
-        fetchContacts();
-        return (
-            contacts.map((contact) => (
-                <p key={contact.id}>Name: {contact.name}</p>
-            ))
-        )
-    }
-
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");

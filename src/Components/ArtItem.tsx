@@ -153,10 +153,9 @@ export default function ArtItem() {
                 {images.map((image) => (
                     <div className="flex-unwrapper">
                         <div
-                            key={image.id}
                             className="art-image"
                         >
-                            <img src={image.image} />
+                            <img key={image.id} src={image.image} />
                         </div>
                         <div>by {image.name}</div>
                         <div className="image-buttons">
