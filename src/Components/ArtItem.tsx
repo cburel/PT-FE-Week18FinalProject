@@ -157,7 +157,7 @@ export default function ArtItem() {
                         >
                             <img key={image.id} src={image.image} />
                         </div>
-                        <div>by {image.name}</div>
+                        <div className='author-name'>by {image.name}</div>
                         <div className="image-buttons">
                             <button
                                 type="button"

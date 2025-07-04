@@ -61,36 +61,38 @@ export default function ContactForm() {
 
     return (
         <div>
-            <input
-                type="text"
-                placeholder="Your Name"
-                onChange={(event => setName(event.target.value))}
+            <div className="input-btn-display">
+                <input
+                    type="text"
+                    placeholder="Your Name"
+                    onChange={(event => setName(event.target.value))}
 
-            />
-            <input
-                type="text"
-                placeholder="Your Email"
-                onChange={(event => setEmail(event.target.value))}
+                />
+                <input
+                    type="text"
+                    placeholder="Your Email"
+                    onChange={(event => setEmail(event.target.value))}
 
-            />
-            <input
-                type="text"
-                placeholder="Your Phone Number"
-                onChange={(event => setPhone(event.target.value))}
-            />
-            <button
-                type="button"
-                onClick={() => createContact(name, email, phone)}
-            >
-                Create Contact
-            </button>
-            <button
-                type="button"
-                onClick={fetchContacts}
-                disabled={isLoading}
-            >
-                {isLoading ? 'Loading...' : 'Reveal Contact Names'}
-            </button>
+                />
+                <input
+                    type="text"
+                    placeholder="Your Phone Number"
+                    onChange={(event => setPhone(event.target.value))}
+                />
+                <button
+                    type="button"
+                    onClick={() => createContact(name, email, phone)}
+                >
+                    Create Contact
+                </button>
+                <button
+                    type="button"
+                    onClick={fetchContacts}
+                    disabled={isLoading}
+                >
+                    {isLoading ? 'Loading...' : 'Reveal Contact Names'}
+                </button>
+            </div>
             {isLoading && (
                 <p>
                     Fetching contacts...

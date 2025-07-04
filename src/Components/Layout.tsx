@@ -8,15 +8,18 @@ import Sidebar from "./Sidebar"
 export default function Layout() {
     return (
         <div>
-            <div>
-                <Headerbar />
+            <div className="top">
+                <div>
+                    <Headerbar />
+                </div>
+                <div className="container">
+                    <Outlet />
+                    <div>
+                        <Sidebar />
+                    </div>
+                </div>
+                <div><Copyright /></div>
             </div>
-
-            <Outlet />
-            <div>
-                <Sidebar />
-            </div>
-            <div><Copyright /></div>
         </div>
     )
 }
