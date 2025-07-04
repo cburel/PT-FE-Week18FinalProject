@@ -9,6 +9,8 @@ export default function Copyright() {
     }
 
     return (
-        getCurrentYear()
+        <div className="footer-display">
+            {getCurrentYear()}
+        </div>
     );
 }

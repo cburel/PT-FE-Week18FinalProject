@@ -1,12 +1,23 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Sidebar() {
+    const [className, setClassName] = useState('active');
+    const toggleSidebar = () => {
+        setClassName(prevClass => prevClass === 'active' ? 'hidden' : 'active')
+    }
+
     return (
-        <>
-            <ul className="sidebar-nav">
-                <li className="sidebar-item"><a href="">LinkedIn</a></li>
-                <li className="sidebar-item"><a href="">GitHub</a></li>
-            </ul>
-        </>
+        <div className="sidebar">
+            <div className="sidebar-w">
+                <div className="sidebar-display">
+                    <button className="sidebar-toggle btn btn-secondary" onClick={toggleSidebar}>X</button>
+                    <ul className={`sidebar-nav ${className}`}>
+                        <li className="sidebar-item"><Link to="">LinkedIn</Link></li>
+                        <li className="sidebar-item"><Link to="">GitHub</Link></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     )
 }

@@ -11,6 +11,7 @@ export default function Layout() {
             <div>
                 <Headerbar />
             </div>
+
             <Outlet />
             <div>
                 <Sidebar />
