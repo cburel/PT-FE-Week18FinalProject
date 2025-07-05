@@ -18,8 +18,8 @@ export default function Sidebar() {
                 <div className="sidebar-display">
                     <button className="sidebar-toggle btn btn-secondary" onClick={toggleSidebar}>X</button>
                     <ul className={`sidebar-nav ${className}`}>
-                        <li className="sidebar-item"><Link to="">LinkedIn</Link></li>
-                        <li className="sidebar-item"><Link to="">GitHub</Link></li>
+                        <li className="sidebar-item"><Link to="https://www.linkedin.com/in/celeste-burel/">LinkedIn</Link></li>
+                        <li className="sidebar-item"><Link to="https://github.com/cburel">GitHub</Link></li>
                     </ul>
                 </div>
             </div>
