@@ -1,15 +1,15 @@
-# Final project
-npm install
-npm run dev
+# Promineo Tech Frontend Final Project
+to start: npm install > npm run dev
 
 components used:
-router
-link
-art page
-contact page
-art item
-contact form
-header bar
-side bar
-layout
+router,
+link,
+homepage,
+art page,
+contact page,
+art item,
+contact form,
+header bar,
+side bar,
+layout,
 copyright
