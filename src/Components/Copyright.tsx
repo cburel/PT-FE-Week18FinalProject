@@ -1,5 +1,9 @@
+
+// copyright component - renders copyright footer
 export default function Copyright() {
 
+
+    // fetches the current year and renders year text based on whether the current year is the same as the year of publication
     function getCurrentYear(): any {
         let currentYear = new Date().getFullYear();
         if (currentYear === 2025) {

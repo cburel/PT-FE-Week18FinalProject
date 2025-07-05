@@ -1,11 +1,13 @@
 import React, { use, useState, useEffect } from 'react'
 
+// art image obj
 interface Image {
     id: number;
     name: string;
     image: string;
 }
 
+// art item component - handles art items
 export default function ArtItem() {
 
     // holds fetched images
@@ -13,6 +15,7 @@ export default function ArtItem() {
     // manages loading status
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
+    // fetches the images from the backend
     useEffect(() => {
         const fetchImages = async () => {
 
@@ -45,6 +48,7 @@ export default function ArtItem() {
             prevImages.filter(image => image.id !== idToDelete));
     }
 
+    // deletes the image from the backend
     const deleteBackend = async (idToDelete: number) => {
         try {
             const response = await fetch(`https://685ede747b57aebd2afad59f.mockapi.io/api/site/art/${idToDelete}`, {
@@ -64,7 +68,7 @@ export default function ArtItem() {
     // tracks updating the item name
     const [updatedName, setUpdatedName] = useState("");
 
-    // handles updating an existing item in the list
+    // handles updating an existing item's author name
     const updateImageName = async (idToUpdate: number, newName: string) => {
 
         if (newName.trim().length === 0) {
@@ -81,6 +85,7 @@ export default function ArtItem() {
         );
     };
 
+    // updates the author name on the backend
     const updateNameBackend = async (idToUpdate: number, newName: string) => {
         try {
             const response = await fetch(`https://685ede747b57aebd2afad59f.mockapi.io/api/site/art/${idToUpdate}`, {
@@ -103,6 +108,7 @@ export default function ArtItem() {
         }
     };
 
+    // tracks values for item creation
     const [newName, setNewName] = useState("");
     const [url, setUrl] = useState("");
 
@@ -120,6 +126,7 @@ export default function ArtItem() {
         setImages([...images, newImage]);
     };
 
+    // creates the new item in the backend
     const createItemBackend = async (newName: string, url: string) => {
         try {
             const response = await fetch(`https://685ede747b57aebd2afad59f.mockapi.io/api/site/art`, {

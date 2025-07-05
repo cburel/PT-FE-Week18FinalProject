@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+// homepage component - renders the homepage content
 export default function Homepage() {
     return (
         <>

@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+// sidebar component - renders the sidebar
 export default function Sidebar() {
+
+    // tracks current visibility
     const [className, setClassName] = useState('active');
+
+    // toggles sidebar visibility classes
     const toggleSidebar = () => {
         setClassName(prevClass => prevClass === 'active' ? 'hidden' : 'active')
     }

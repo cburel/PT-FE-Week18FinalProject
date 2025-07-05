@@ -1,21 +1,25 @@
 import { useEffect, useState } from "react";
 
+// contact obj
 interface Contact {
     id: number;
     name: string;
 }
 
+// contact form component - handles the contact form
 export default function ContactForm() {
 
+    // tracks contacts, loading, and error states
     const [contacts, setContacts] = useState<Contact[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
+    // fetches the current contact list from the api
     const fetchContacts = async () => {
         setIsLoading(true);
         setError(null);
 
-        // fetch the data
+        // fetch the data. if there is an error, report it
         try {
             const response = await fetch("https://685ede747b57aebd2afad59f.mockapi.io/api/site/contact");
             if (!response.ok) {
@@ -30,10 +34,12 @@ export default function ContactForm() {
         };
     }
 
+    // tracks contact info
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
 
+    // checks new contact values. if any field is left blank, does not create the contact
     const createContact = (contactName: string, contactEmail: string, contactPhone: string) => {
         if (contactName.trim().length !== 0 &&
             contactEmail.trim().length !== 0 &&
@@ -45,6 +51,7 @@ export default function ContactForm() {
         }
     }
 
+    // adds the new contact
     const createContactBackend = async (contactName: string, contactEmail: string, contactPhone: string) => {
         try {
             const response = await fetch(`https://685ede747b57aebd2afad59f.mockapi.io/api/site/contact`, {
@@ -66,6 +73,7 @@ export default function ContactForm() {
         }
     }
 
+    // renders the form and contacts
     return (
         <div>
             <div className="input-btn-display">
@@ -111,7 +119,6 @@ export default function ContactForm() {
                     <span >{error}</span>
                 </div>
             )}
-
             {!isLoading && contacts.length > 0 && (
                 <div className="contacts-list">
                     <ul>

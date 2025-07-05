@@ -6,6 +6,7 @@ import Layout from './Components/Layout'
 import Art from './Components/Pages/Art'
 import Contact from './Components/Pages/Contact'
 
+// router component - handles routing pages
 const router = createBrowserRouter(
   [
     {
@@ -13,6 +14,7 @@ const router = createBrowserRouter(
       element: <Layout />,
       children: [
         {
+          // makes the index page link to /homepage
           index: true,
           element: <Homepage />
         },

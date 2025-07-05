@@ -5,6 +5,7 @@ import "/node_modules/bootstrap/dist/css/bootstrap.min.css"
 import "../App.css"
 import Sidebar from "./Sidebar"
 
+// Layout component - handles rendering child components - usually this is called app.tsx
 export default function Layout() {
     return (
         <>
