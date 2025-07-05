@@ -1,4 +1,4 @@
-import React, { use, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 // art image obj
 interface Image {

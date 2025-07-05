@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import ArtItem from '../ArtItem'
 
 // art page component - renders the art page

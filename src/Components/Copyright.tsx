@@ -1,4 +1,3 @@
-
 // copyright component - renders copyright footer
 export default function Copyright() {
 
