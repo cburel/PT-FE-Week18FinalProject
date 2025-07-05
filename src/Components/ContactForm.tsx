@@ -35,7 +35,14 @@ export default function ContactForm() {
     const [phone, setPhone] = useState("");
 
     const createContact = (contactName: string, contactEmail: string, contactPhone: string) => {
-        createContactBackend(contactName, contactEmail, contactPhone);
+        if (contactName.trim().length !== 0 &&
+            contactEmail.trim().length !== 0 &&
+            contactPhone.trim().length !== 0) {
+            createContactBackend(contactName, contactEmail, contactPhone);
+        }
+        else {
+            console.error("Name, email, and phone values cannot be empty!");
+        }
     }
 
     const createContactBackend = async (contactName: string, contactEmail: string, contactPhone: string) => {
@@ -106,8 +113,7 @@ export default function ContactForm() {
             )}
 
             {!isLoading && contacts.length > 0 && (
-                <div>
-
+                <div className="contacts-list">
                     <ul>
                         {contacts.map((contact) => (
                             <li

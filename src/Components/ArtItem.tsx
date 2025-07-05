@@ -67,6 +67,11 @@ export default function ArtItem() {
     // handles updating an existing item in the list
     const updateImageName = async (idToUpdate: number, newName: string) => {
 
+        if (newName.trim().length === 0) {
+            console.error("Author name cannot be empty!");
+            return;
+        }
+
         updateNameBackend(idToUpdate, newName);
 
         setImages(prevImages =>
@@ -103,6 +108,11 @@ export default function ArtItem() {
 
     // handles updating an existing item in the list
     const createImage = async (newName: string, url: string) => {
+
+        if (newName.trim().length === 0 || url.trim().length === 0) {
+            console.error("Author name and image URL cannot be empty!");
+            return
+        }
 
         createItemBackend(newName, url);
 
@@ -148,14 +158,14 @@ export default function ArtItem() {
 
     // renders out the items onto the page
     return (
-        <div>
+        <>
             <div className="art-items">
                 {images.map((image) => (
-                    <div className="flex-unwrapper">
+                    <div key={image.id} className="flex-unwrapper">
                         <div
                             className="art-image"
                         >
-                            <img key={image.id} src={image.image} />
+                            <img src={image.image} />
                         </div>
                         <div className='author-name'>by {image.name}</div>
                         <div className="image-buttons">
@@ -203,6 +213,6 @@ export default function ArtItem() {
                     </input>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
